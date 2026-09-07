@@ -1,0 +1,47 @@
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int n,m,e;
+void dis(long long t[],long long s[],long long q){
+   auto *tr = lower_bound(t,t+m,q);
+    auto *tl = (tr!=t)?prev(tr):tr;
+    auto *sr = lower_bound(s,s+n,q);
+    auto *sl = (sr!=s)?prev(sr):sr;
+    long long mini = 10000000000000000;
+    //left
+    if(*tl<=q && *sl<=q){
+        long long d = q-min(*tl,*sl);
+        mini = min(d,mini);
+    }
+    //right
+    if(tr!=t+m && sr!=s+n){
+        long long d = max(*tr,*sr)-q;
+        mini = min(d,mini);
+    }
+    if(sr!=s+n && *tl<=q){
+        long long d = *sr-*tl+min(*sr-q,q-*tl);
+        mini = min(d,mini);
+    }
+    if(*sl<=q && tr!=t+m){
+        long long d = *tr-*sl+min(*tr-q,q-*sl);
+        mini = min(d,mini);
+    }
+    cout<< mini<<endl;
+}
+using namespace std;
+int main() {
+    
+    cin>>n>>m>>e;
+    long long t[m],s[n],q[e];
+    for(int i=0;i<n;i++){
+        cin>>s[i];
+    }
+    for(int i=0;i<m;i++)
+    cin>>t[i];
+    for(int i=0;i<e;i++){
+    cin>>q[i];
+    dis(t,s,q[i]);
+    }
+
+}
