@@ -1,0 +1,30 @@
+#include <iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+vector<vector<int>> ans;
+void dfs(int n,int bal,vector<int> a){
+    if(n==1){
+        a[n-1]=bal;
+        ans.push_back(a);
+        return;
+    }
+    a[n-1]=0;
+    while(bal>=0){
+        dfs(n-1,bal,a);
+        bal-=n;
+        a[n-1]++;
+    }
+}
+int main() {
+    int n,k;
+    cin>>n>>k;
+    vector<int> a(n);
+    dfs(n,k,a);
+    sort(ans.begin(),ans.end());
+    for(vector<int> s:ans){
+        for(int i=0;i<n;i++)
+        cout<<s[i]<<" ";
+        cout<<endl;
+    }
+}
